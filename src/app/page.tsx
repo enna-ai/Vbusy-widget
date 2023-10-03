@@ -1,7 +1,9 @@
 "use client";
 
 import React, { useState } from 'react';
+import Input from '@/components/Input';
 import Widget from "@/components/Widget";
+import { InputConfig } from '@/utils/input';
 import styles from '@/styles/modules/page.module.scss';
 
 export default function Home() {
@@ -12,116 +14,75 @@ export default function Home() {
   const [dueDate, setDueDate] = useState<boolean>(false);
   const [priority, setPriority] = useState<boolean>(false);
 
-  const handleUserId = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUserId(event.target.value);
-    console.log(event.target.value);
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>, stateKey: string) => {
+    const newValue = event.target.type === "checkbox" ? event.target.checked : event.target.value;
+
+    switch (stateKey) {
+      case "userId":
+        setUserId(newValue as string);
+        break;
+      case "radius":
+        setRadius(newValue as boolean);
+        break;
+      case "backgroundColor":
+        setBackgroundColor(newValue as string);
+        break;
+      case "textColor":
+        setTextColor(newValue as string);
+        break;
+      case "dueDate":
+        setDueDate(newValue as boolean);
+        break;
+      case "priority":
+        setPriority(newValue as boolean);
+        break;
+      default:
+        break;
+    }
   };
 
-  const handleRadius = () => {
-    setRadius(!radius);
+  const handleCopyToClipboard = (code: string) => {
+    navigator.clipboard.writeText(code);
   };
 
-  const handleDueDate = () => {
-    setDueDate(!dueDate);
-  };
-
-  const handlePriority = () => {
-    setPriority(!priority);
-  }
-
-  const handleBackgroundColor = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setBackgroundColor(event.target.value);
-  };
-
-  const handleTextColor = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTextColor(event.target.value);
-  }
-
-  const HTMLWidget = () => {
+  const HTMLWidget = (userId: string, radius: boolean, backgroundColor: string, textColor: string, dueDate: boolean, priorityLevel: boolean) => {
     return `
-      <iframe src="http://localhost:3000/widget" width="300" height="200" frameborder="0"></iframe>
+      <iframe src="http://localhost:3000/widget?userId=${userId}&radius=${radius}&backgroundColor=${backgroundColor}&textColor=${textColor}&dueDate=${dueDate}&priorityLevel=${priorityLevel}" width="300" height="200" frameborder="0"></iframe>
     `;
   };
 
   return (
     <main className={styles.main}>
-      <h1>Vbusy Widget Builder</h1>
-      <p>Grab your user ID from your user settings in Vbusy</p>
-      
-      <Widget userId={userId} radius={radius} backgroundColor={backgroundColor} textColor={textColor} dueDates={dueDate} priorityLevel={priority} />
+      <section className={styles.heading}>
+        <h1>Vbusy Widget Builder</h1>
+        <p>Retrieve your unique user ID from your Vbusy account settings.</p>
+      </section>
 
-      <div>
-        <HTMLWidget />
-        <button>Copy</button>
-      </div>
 
-      <div>
-        <label>
-          User ID
-          <input
-            type="text"
-            value={userId}
-            onChange={handleUserId}
-          />
-        </label>
-      </div>
+      <iframe src="http://localhost:3000/widget?userId=64fc8956eea9a7d89a5f901e&radius=true&backgroundColor=#181825&textColor=#eaefff&dueDate=false&priorityLevel=false" width="300" height="200" frameBorder="0"></iframe>
 
-      <div>
-        <label>
-          Border Radius:
-          <input
-            type="checkbox"
-            checked={radius}
-            onChange={handleRadius}
-          />
-        </label>
-      </div>
+      <section className={styles.preview}>
+        <h2>Preview</h2>
+        <Widget userId={userId} radius={radius} backgroundColor={backgroundColor} textColor={textColor} dueDates={dueDate} priorityLevel={priority} />
+      </section>
 
-      <div>
-        <label>
-          Show Due Dates:
-          <input
-            type="checkbox"
-            checked={dueDate}
-            onChange={handleDueDate}
-          />
-        </label>
-      </div>
+      <section className={styles.options}>
+        <Input
+          inputValues={{ userId, radius, backgroundColor, textColor, dueDate, priority }}
+          handleInputChange={handleInputChange}
+          inputConfig={InputConfig}
+        />
+      </section>
 
-      <div>
-        <label>
-          Show Priority Levels:
-          <input
-            type="checkbox"
-            checked={priority}
-            onChange={handlePriority}
-          />
-        </label>
-      </div>
-
-      <div>
-        <label>
-          Background Color:
-          <input
-            type="text"
-            placeholder={backgroundColor}
-            value={backgroundColor}
-            onChange={handleBackgroundColor}
-          />
-        </label>
-      </div>
-
-      <div>
-        <label>
-          Text Color:
-          <input
-            type="text"
-            placeholder={textColor}
-            value={textColor}
-            onChange={handleTextColor}
-          />
-        </label>
-      </div>
+      <section className={styles.iframeCode}>
+        <h2>Raw HTML</h2>
+        <textarea
+          id="iframeCode"
+          readOnly
+          value={HTMLWidget(userId, radius, backgroundColor, textColor, dueDate, priority)}
+        ></textarea>
+        <button onClick={() => handleCopyToClipboard(HTMLWidget(userId, radius, backgroundColor, textColor, dueDate, priority))}>Copy</button>
+      </section>
     </main>
   )
 }

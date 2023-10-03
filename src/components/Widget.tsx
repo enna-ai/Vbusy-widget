@@ -18,12 +18,12 @@ interface WidgetProps {
     radius: boolean;
     backgroundColor: string;
     textColor: string;
-    icon: string;
     dueDates: boolean;
     priorityLevel: boolean;
 }
 
-const Widget: React.FC<WidgetProps> = ({ userId, icon, radius, backgroundColor, textColor, dueDates, priorityLevel }) => {
+const Widget: React.FC<WidgetProps> = ({ userId, radius, backgroundColor, textColor, dueDates, priorityLevel }) => {
+    const [fetchUser, setFetchUser] = useState<string | null>(null);
     const [userData, setUserData] = useState<Task[]>([]);
     const [error, setError] = useState<string | null>(null);
 
@@ -32,13 +32,24 @@ const Widget: React.FC<WidgetProps> = ({ userId, icon, radius, backgroundColor, 
             try {
                 setError(null);
 
-                if (!userId) {
+                const queryParams = new URLSearchParams(location.search);
+                const queryUserId = queryParams?.get("userId") ?? "64fc8956eea9a7d89a5f901e";
+                const queryRadius = queryParams?.get("radius") ?? true;
+                const queryBgColor = queryParams?.get("backgroundColor") ?? "#181825";
+                const queryTextColor = queryParams?.get("textColor") ?? "#eaefff";
+                const queryDueDates = queryParams?.get("dueDates") ?? true;
+                const queryPriority = queryParams?.get("priorityLevel") ?? true;
+
+                if (queryUserId) {
+                    setFetchUser(queryUserId);
+                } else {
                     setError("Missing User ID");
                     return;
                 }
 
-                const response = await axios.get(`http://localhost:4000/api/v1/vbusy/${userId}`);
+                const response = await axios.get(`http://localhost:4000/api/v1/vbusy/${queryUserId}`);
                 const data = await response.data;
+                console.log("Data", data);
                 const filteredData = data.filter((item: Task) => !item.archived);
                 setUserData(filteredData);
             } catch (error) {
@@ -48,7 +59,7 @@ const Widget: React.FC<WidgetProps> = ({ userId, icon, radius, backgroundColor, 
         };
 
         getUserTasks();
-    }, [userId]);
+    }, [userId, radius, backgroundColor, textColor, dueDates, priorityLevel]);
 
     const formatDueDate = (date: string) => {
         if (date) {
@@ -96,7 +107,7 @@ const Widget: React.FC<WidgetProps> = ({ userId, icon, radius, backgroundColor, 
                                     {index !== 3 && <hr />}
                                 </div>
                             )).slice(0, 4)}
-                            
+
                             {remainingTasksCount > 0 && (
                                 <span className={styles.remainingTasks}>
                                     + {remainingTasksCount} more task{remainingTasksCount > 1 ? "s" : ""}
