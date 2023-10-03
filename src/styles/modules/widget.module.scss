@@ -1,0 +1,68 @@
+@import "../partials/variables";
+
+.widgetWrapper {
+    width: 450px;
+    height: 220px;
+    padding: 20px;
+    background-image: linear-gradient(0deg, $mantle 72%, $crust 72%);
+
+    .widgetContainer {        
+        .widgetHeader {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .widgetHeading {
+                font-size: 20px;
+                font-weight: 600;
+
+                .taskCount {
+                    color: $yellow;
+                    font-weight: 400;
+                }
+            }
+        }
+
+        .widgetBody {
+            .invalidBody {
+                color: $red;
+            }
+
+            .taskBody {
+                padding-top: 10px;
+                list-style: none;
+
+                .taskContent {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+
+                    .taskItem {
+                        padding-top: 5px;
+                        padding-bottom: 5px;
+                        color: $white-lightest;
+                        font-size: 15px;
+
+                        .priorityLevelDot {
+                            height: 8px;
+                            width: 8px;
+                            border-radius: 20%;
+                            margin-right: 6px;
+                            display: inline-block;
+                        }
+                    }
+                }
+
+                hr {
+                    border: 1px solid $base-light;
+                }
+
+                .remainingTasks {
+                    font-size: 15px;
+                    font-style: italic;
+                    color: $white-trans;
+                }
+            }
+        }
+    }
+}
