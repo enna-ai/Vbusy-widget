@@ -15,7 +15,8 @@ const WidgetPage: React.FC = () => {
     const userId = searchParams.get("userId");
     const borderRadiusParam = searchParams.get("borderRadius") ?? "false";
     const borderRadius = JSON.parse(borderRadiusParam);
-    const backgroundColor = searchParams.get("backgroundColor");
+    const headerColor = searchParams.get("headerColor");
+    const bodyColor = searchParams.get("bodyColor");
     const textColor = searchParams.get("textColor");
     const dueDatesParam = searchParams.get("dueDates") ?? "false";
     const dueDates = JSON.parse(dueDatesParam);
@@ -45,7 +46,7 @@ const WidgetPage: React.FC = () => {
         getUserTasks();
     }, []);
 
-    return <Widget userId={userId} backgroundColor={backgroundColor} textColor={textColor} borderRadius={borderRadius} dueDates={dueDates} priorityLevels={priorityLevels} userData={userData} errorMsg={error} />
+    return <Widget userId={userId} headerColor={headerColor} bodyColor={bodyColor} textColor={textColor} borderRadius={borderRadius} dueDates={dueDates} priorityLevels={priorityLevels} userData={userData} errorMsg={error} />
 };
 
 export default WidgetPage;

@@ -8,7 +8,8 @@ import styles from '@/styles/modules/page.module.scss';
 export default function Home() {
   const [userId, setUserId] = useState<string>("64fc8956eea9a7d89a5f901e");
   const [radius, setRadius] = useState<boolean>(true);
-  const [backgroundColor, setBackgroundColor] = useState<string>("#181825");
+  const [headerColor, setHeaderColor] = useState<string>("#181926");
+  const [bodyColor, setBodyColor] = useState<string>("#1e2030");
   const [textColor, setTextColor] = useState<string>("#eaefff");
   const [dueDate, setDueDate] = useState<boolean>(false);
   const [priority, setPriority] = useState<boolean>(false);
@@ -23,8 +24,11 @@ export default function Home() {
       case "radius":
         setRadius(newValue as boolean);
         break;
-      case "backgroundColor":
-        setBackgroundColor(newValue as string);
+      case "headerColor":
+        setHeaderColor(newValue as string);
+        break;
+      case "bodyColor":
+        setBodyColor(newValue as string);
         break;
       case "textColor":
         setTextColor(newValue as string);
@@ -55,13 +59,14 @@ export default function Home() {
   const HTMLWidget = (
     userId: string,
     borderRadius: boolean,
-    backgroundColor: string,
+    headerColor: string,
+    bodyColor: string,
     textColor: string,
     dueDate: boolean,
     priorityLevel: boolean
   ) => {
     return `
-      <iframe title="Vbusy Widget" src="http://localhost:3000/widget?userId=${userId}&borderRadius=${borderRadius}&backgroundColor=${encodeHexColor(backgroundColor)}&textColor=${encodeHexColor(textColor)}&dueDates=${dueDate}&priorityLevels=${priorityLevel}" width="420" height="220" frameBorder="0"></iframe>
+      <iframe title="Vbusy Widget" src="http://localhost:3000/widget?userId=${userId}&borderRadius=${borderRadius}&headerColor=${encodeHexColor(headerColor)}&bodyColor=${encodeHexColor(bodyColor)}&textColor=${encodeHexColor(textColor)}&dueDates=${dueDate}&priorityLevels=${priorityLevel}" width="420" height="220" frameBorder="0"></iframe>
     `;
   };
 
@@ -77,7 +82,7 @@ export default function Home() {
         
         <iframe
           title="Vbusy Widget"
-          src={`http://localhost:3000/widget?userId=${userId}&borderRadius=${radius}&backgroundColor=${encodeHexColor(backgroundColor)}&textColor=${encodeHexColor(textColor)}&dueDates=${dueDate}&priorityLevels=${priority}`}
+          src={`http://localhost:3000/widget?userId=${userId}&borderRadius=${radius}&headerColor=${encodeHexColor(headerColor)}&bodyColor=${encodeHexColor(bodyColor)}&textColor=${encodeHexColor(textColor)}&dueDates=${dueDate}&priorityLevels=${priority}`}
           width="420"
           height="220"
           frameBorder="0"
@@ -86,7 +91,7 @@ export default function Home() {
 
       <section className={styles.options}>
         <Input
-          inputValues={{ userId, radius, backgroundColor, textColor, dueDate, priority }}
+          inputValues={{ userId, radius, headerColor, bodyColor, textColor, dueDate, priority }}
           handleInputChange={handleInputChange}
           inputConfig={InputConfig}
         />
@@ -97,9 +102,9 @@ export default function Home() {
         <textarea
           id="iframeCode"
           readOnly
-          value={HTMLWidget(userId, radius, backgroundColor, textColor, dueDate, priority)}
+          value={HTMLWidget(userId, radius, headerColor, bodyColor, textColor, dueDate, priority)}
         ></textarea>
-        <button onClick={() => handleCopyToClipboard(HTMLWidget(userId, radius, backgroundColor, textColor, dueDate, priority))}>Copy</button>
+        <button onClick={() => handleCopyToClipboard(HTMLWidget(userId, radius, headerColor, bodyColor, textColor, dueDate, priority))}>Copy</button>
       </section>
     </main>
   )

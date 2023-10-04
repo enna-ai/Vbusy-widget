@@ -9,7 +9,8 @@ import styles from "@/styles/modules/widget.module.scss";
 interface WidgetProps {
     userId: string | null;
     borderRadius: string;
-    backgroundColor: string | null;
+    headerColor: string | null;
+    bodyColor: string | null;
     textColor: string | null;
     dueDates: string;
     priorityLevels: string;
@@ -17,7 +18,7 @@ interface WidgetProps {
     errorMsg: string | null;
 }
 
-const Widget: React.FC<WidgetProps> = ({ userId, borderRadius, backgroundColor, textColor, dueDates, priorityLevels, userData, errorMsg }) => {
+const Widget: React.FC<WidgetProps> = ({ userId, borderRadius, headerColor, bodyColor, textColor, dueDates, priorityLevels, userData, errorMsg }) => {
 
     const formatDueDate = (date: string) => {
         if (date) {
@@ -26,7 +27,6 @@ const Widget: React.FC<WidgetProps> = ({ userId, borderRadius, backgroundColor, 
     };
 
     const remainingTasksCount = userData.length - 4;
-    console.log("bg", backgroundColor);
 
     const priorityColors = {
         low: "#a6da95",
@@ -36,7 +36,7 @@ const Widget: React.FC<WidgetProps> = ({ userId, borderRadius, backgroundColor, 
 
     return (
         <>
-            <div className={styles.widgetWrapper} style={{ borderRadius: borderRadius ? "25px" : "0px", backgroundColor: backgroundColor ?? "#181825", color: textColor ?? "#eaefff" }}>
+            <div className={styles.widgetWrapper} style={{ borderRadius: borderRadius ? "25px" : "0px", backgroundImage: `linear-gradient(0deg, ${bodyColor} 72%, ${headerColor} 72%)`, color: textColor ?? "#eaefff" }}>
                 <div className={styles.widgetContainer}>
                     <div className={styles.widgetHeader}>
                         <h2 className={styles.widgetHeading}>My Tasks <span className={styles.taskCount}>{userData.length}</span></h2>

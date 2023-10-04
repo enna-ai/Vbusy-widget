@@ -5,9 +5,14 @@ export const InputConfig = [
         state: "userId",
     },
     {
-        label: "Background Color",
+        label: "Header Color",
         type: "text",
-        state: "backgroundColor",
+        state: "headerColor",
+    },
+    {
+        label: "Body Color",
+        type: "text",
+        state: "bodyColor",
     },
     {
         label: "Text Color",
