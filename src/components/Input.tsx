@@ -28,9 +28,9 @@ const Input: React.FC<InputProps> = ({ inputValues, handleInputChange, inputConf
                             </div>
                         ) : (
                             <div className={styles.inputText}>
-                                <div className={styles.inputTextLabel}>
+                                <h4 className={styles.inputTextLabel}>
                                     {config.label}
-                                </div>
+                                </h4>
                                 <input
                                     className={styles.input}
                                     type={config.type}

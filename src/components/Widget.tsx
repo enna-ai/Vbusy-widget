@@ -26,7 +26,7 @@ const Widget: React.FC<WidgetProps> = ({ userId, borderRadius, headerColor, body
         }
     };
 
-    const remainingTasksCount = userData.length - 4;
+    const remainingTasksCount = userData.length - 3;
 
     const priorityColors = {
         low: "#a6da95",
@@ -64,9 +64,9 @@ const Widget: React.FC<WidgetProps> = ({ userId, borderRadius, headerColor, body
                                                 </p>
                                             }
                                         </div>
-                                        {index !== 3 && <hr />}
+                                        {index !== 2 && <hr />}
                                     </div>
-                                )).slice(0, 4)}
+                                )).slice(0, 3)}
 
                                 {remainingTasksCount > 0 && (
                                     <span className={styles.remainingTasks}>
