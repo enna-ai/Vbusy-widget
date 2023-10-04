@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import Input from '@/components/Input';
-import Widget from "@/components/Widget";
 import { InputConfig } from '@/utils/input';
 import styles from '@/styles/modules/page.module.scss';
 
@@ -45,9 +44,24 @@ export default function Home() {
     navigator.clipboard.writeText(code);
   };
 
-  const HTMLWidget = (userId: string, radius: boolean, backgroundColor: string, textColor: string, dueDate: boolean, priorityLevel: boolean) => {
+  const encodeHexColor = (color: string) => {
+    if (!color.startsWith("#")) {
+      color = "#" + color;
+    }
+
+    return encodeURIComponent(color);
+  };
+
+  const HTMLWidget = (
+    userId: string,
+    borderRadius: boolean,
+    backgroundColor: string,
+    textColor: string,
+    dueDate: boolean,
+    priorityLevel: boolean
+  ) => {
     return `
-      <iframe src="http://localhost:3000/widget?userId=${userId}&radius=${radius}&backgroundColor=${backgroundColor}&textColor=${textColor}&dueDate=${dueDate}&priorityLevel=${priorityLevel}" width="300" height="200" frameborder="0"></iframe>
+      <iframe title="Vbusy Widget" src="http://localhost:3000/widget?userId=${userId}&borderRadius=${borderRadius}&backgroundColor=${encodeHexColor(backgroundColor)}&textColor=${encodeHexColor(textColor)}&dueDates=${dueDate}&priorityLevels=${priorityLevel}" width="420" height="220" frameBorder="0"></iframe>
     `;
   };
 
@@ -58,12 +72,16 @@ export default function Home() {
         <p>Retrieve your unique user ID from your Vbusy account settings.</p>
       </section>
 
-
-      <iframe src="http://localhost:3000/widget?userId=64fc8956eea9a7d89a5f901e&radius=true&backgroundColor=#181825&textColor=#eaefff&dueDate=false&priorityLevel=false" width="300" height="200" frameBorder="0"></iframe>
-
       <section className={styles.preview}>
         <h2>Preview</h2>
-        <Widget userId={userId} radius={radius} backgroundColor={backgroundColor} textColor={textColor} dueDates={dueDate} priorityLevel={priority} />
+        
+        <iframe
+          title="Vbusy Widget"
+          src={`http://localhost:3000/widget?userId=${userId}&borderRadius=${radius}&backgroundColor=${encodeHexColor(backgroundColor)}&textColor=${encodeHexColor(textColor)}&dueDates=${dueDate}&priorityLevels=${priority}`}
+          width="420"
+          height="220"
+          frameBorder="0"
+        ></iframe>
       </section>
 
       <section className={styles.options}>
