@@ -40,7 +40,7 @@ const Widget: React.FC<WidgetProps> = ({ userId, borderRadius, headerColor, body
                 <div className={styles.widgetContainer}>
                     <div className={styles.widgetHeader}>
                         <h2 className={styles.widgetHeading}>My Tasks <span className={styles.taskCount}>{userData.length}</span></h2>
-                        <Link href="http://localhost:3000/login" target="_blank" rel="noopener noreferrer">
+                        <Link href="https://vbusy.vercel.app/login" target="_blank" rel="noopener noreferrer">
                             <Image className={styles.widgetIcon} src={BeeImage} alt="Vbusy Widget Icon" width={30} height={30} />
                         </Link>
                     </div>

@@ -4,6 +4,7 @@ import React, { useEffect, useState} from "react";
 import { useSearchParams } from "next/navigation";
 import Widget from "@/components/Widget";
 import { Task } from "@/interfaces/task";
+import { API_BASE_URL } from "@/utils/consts";
 import axios from "axios";
 
 const WidgetPage: React.FC = () => {
@@ -33,7 +34,7 @@ const WidgetPage: React.FC = () => {
                     return;
                 }
 
-                const response = await axios.get(`http://localhost:4000/api/v1/vbusy/${userId}`);
+                const response = await axios.get(`https://vbusy-cloud.fly.dev/api/v1/vbusy/${userId}`);
                 const data = await response.data;
                 const filteredData = data.filter((item: Task) => !item.archived);
                 setUserData(filteredData);

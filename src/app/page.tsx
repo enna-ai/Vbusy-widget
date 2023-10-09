@@ -70,7 +70,7 @@ export default function Home() {
     return `
       <iframe
         title="Vbusy Widget"
-        src="http://localhost:3000/widget?userId=${userId}&borderRadius=${borderRadius}&headerColor=${encodeHexColor(headerColor)}&bodyColor=${encodeHexColor(bodyColor)}&textColor=${encodeHexColor(textColor)}&dueDates=${dueDate}&priorityLevels=${priorityLevel}"
+        src="https://vbusy-widget.vercel.app/widget?userId=${userId}&borderRadius=${borderRadius}&headerColor=${encodeHexColor(headerColor)}&bodyColor=${encodeHexColor(bodyColor)}&textColor=${encodeHexColor(textColor)}&dueDates=${dueDate}&priorityLevels=${priorityLevel}"
         width="500"
         height="220"
         frameBorder="0"
@@ -102,7 +102,7 @@ export default function Home() {
 
         <iframe
           title="Vbusy Widget"
-          src={`http://localhost:3000/widget?userId=${userId}&borderRadius=${radius}&headerColor=${encodeHexColor(headerColor)}&bodyColor=${encodeHexColor(bodyColor)}&textColor=${encodeHexColor(textColor)}&dueDates=${dueDate}&priorityLevels=${priority}`}
+          src={`https://vbusy-widget.vercel.app/widget?userId=${userId}&borderRadius=${radius}&headerColor=${encodeHexColor(headerColor)}&bodyColor=${encodeHexColor(bodyColor)}&textColor=${encodeHexColor(textColor)}&dueDates=${dueDate}&priorityLevels=${priority}`}
           width="400"
           height="200"
           frameBorder="0"
