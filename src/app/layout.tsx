@@ -7,7 +7,8 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "Vbusy Widget",
   description: "Vbusy widget builder",
-  icons: "favicon.ico"
+  icons: "favicon.ico",
+  themeColor: "#a44a3f",
 }
 
 export default function RootLayout({
