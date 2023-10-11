@@ -1,7 +1,9 @@
 @import "../partials/variables";
 
 .main {
-    margin: 2em min(10%, 20%, 20%);
+    padding: 2em min(10%, 20%, 20%);
+    background: $beige;
+    color: $darkred;
 
     .heading {
         padding-bottom: 10px;

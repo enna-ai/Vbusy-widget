@@ -12,13 +12,14 @@ interface WidgetProps {
     headerColor: string | null;
     bodyColor: string | null;
     textColor: string | null;
+    accentColor: string | null,
     dueDates: string;
     priorityLevels: string;
     userData: Task[];
     errorMsg: string | null;
 }
 
-const Widget: React.FC<WidgetProps> = ({ userId, borderRadius, headerColor, bodyColor, textColor, dueDates, priorityLevels, userData, errorMsg }) => {
+const Widget: React.FC<WidgetProps> = ({ userId, borderRadius, headerColor, bodyColor, textColor, accentColor, dueDates, priorityLevels, userData, errorMsg }) => {
 
     const formatDueDate = (date: string) => {
         if (date) {
@@ -35,11 +36,11 @@ const Widget: React.FC<WidgetProps> = ({ userId, borderRadius, headerColor, body
     } as any;
 
     return (
-        <>
+        <div className={styles.main}>
             <div className={styles.widgetWrapper} style={{ borderRadius: borderRadius ? "25px" : "0px", backgroundImage: `linear-gradient(0deg, ${bodyColor} 72%, ${headerColor} 72%)`, color: textColor ?? "#eaefff" }}>
                 <div className={styles.widgetContainer}>
                     <div className={styles.widgetHeader}>
-                        <h2 className={styles.widgetHeading}>My Tasks <span className={styles.taskCount}>{userData.length}</span></h2>
+                        <h2 className={styles.widgetHeading}>My Tasks <span className={styles.taskCount} style={{ color: accentColor ?? "#f5e48b" }}>{userData.length}</span></h2>
                         <Link href="https://vbusy.vercel.app/login" target="_blank" rel="noopener noreferrer">
                             <Image className={styles.widgetIcon} src={BeeImage} alt="Vbusy Widget Icon" width={30} height={30} />
                         </Link>
@@ -78,7 +79,7 @@ const Widget: React.FC<WidgetProps> = ({ userId, borderRadius, headerColor, body
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 

@@ -4,7 +4,6 @@ import React, { useEffect, useState} from "react";
 import { useSearchParams } from "next/navigation";
 import Widget from "@/components/Widget";
 import { Task } from "@/interfaces/task";
-import { API_BASE_URL } from "@/utils/consts";
 import axios from "axios";
 
 const WidgetPage: React.FC = () => {
@@ -19,6 +18,7 @@ const WidgetPage: React.FC = () => {
     const headerColor = searchParams.get("headerColor");
     const bodyColor = searchParams.get("bodyColor");
     const textColor = searchParams.get("textColor");
+    const accentColor = searchParams.get("accentColor");
     const dueDatesParam = searchParams.get("dueDates") ?? "false";
     const dueDates = JSON.parse(dueDatesParam);
     const priorityLevelsParam = searchParams.get("priorityLevels") ?? "false";
@@ -47,7 +47,7 @@ const WidgetPage: React.FC = () => {
         getUserTasks();
     }, []);
 
-    return <Widget userId={userId} headerColor={headerColor} bodyColor={bodyColor} textColor={textColor} borderRadius={borderRadius} dueDates={dueDates} priorityLevels={priorityLevels} userData={userData} errorMsg={error} />
+    return <Widget userId={userId} headerColor={headerColor} bodyColor={bodyColor} textColor={textColor} accentColor={accentColor} borderRadius={borderRadius} dueDates={dueDates} priorityLevels={priorityLevels} userData={userData} errorMsg={error} />
 };
 
 export default WidgetPage;

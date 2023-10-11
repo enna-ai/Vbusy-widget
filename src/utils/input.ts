@@ -20,6 +20,11 @@ export const InputConfig = [
         state: "textColor",
     },
     {
+        label: "Accent Color",
+        type: "text",
+        state: "accentColor",
+    },
+    {
         label: "Border Radius",
         type: "checkbox",
         state: "radius",

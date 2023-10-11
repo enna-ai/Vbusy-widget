@@ -13,6 +13,7 @@ export default function Home() {
   const [headerColor, setHeaderColor] = useState<string>("#181926");
   const [bodyColor, setBodyColor] = useState<string>("#1e2030");
   const [textColor, setTextColor] = useState<string>("#eaefff");
+  const [accentColor, setAccentColor] = useState<string>("#f5e48b");
   const [dueDate, setDueDate] = useState<boolean>(false);
   const [priority, setPriority] = useState<boolean>(false);
 
@@ -34,6 +35,9 @@ export default function Home() {
         break;
       case "textColor":
         setTextColor(newValue as string);
+        break;
+      case "accentColor":
+        setAccentColor(newValue as string);
         break;
       case "dueDate":
         setDueDate(newValue as boolean);
@@ -64,15 +68,16 @@ export default function Home() {
     headerColor: string,
     bodyColor: string,
     textColor: string,
+    accentColor: string,
     dueDate: boolean,
     priorityLevel: boolean
   ) => {
     return `
       <iframe
         title="Vbusy Widget"
-        src="https://vbusy-widget.vercel.app/widget?userId=${userId}&borderRadius=${borderRadius}&headerColor=${encodeHexColor(headerColor)}&bodyColor=${encodeHexColor(bodyColor)}&textColor=${encodeHexColor(textColor)}&dueDates=${dueDate}&priorityLevels=${priorityLevel}"
-        width="500"
-        height="220"
+        src="https://vbusy-widget.vercel.app/widget?userId=${userId}&borderRadius=${borderRadius}&headerColor=${encodeHexColor(headerColor)}&bodyColor=${encodeHexColor(bodyColor)}&textColor=${encodeHexColor(textColor)}&accentColor=${encodeHexColor(accentColor)}&dueDates=${dueDate}&priorityLevels=${priorityLevel}"
+        width="400"
+        height="200"
         frameBorder="0"
       ></iframe>
     `;
@@ -89,7 +94,7 @@ export default function Home() {
         <h2 className={styles.settingsHeading}> Options</h2>
         <div className={styles.options}>
           <Input
-            inputValues={{ userId, radius, headerColor, bodyColor, textColor, dueDate, priority }}
+            inputValues={{ userId, radius, headerColor, bodyColor, textColor, accentColor, dueDate, priority }}
             handleInputChange={handleInputChange}
             inputConfig={InputConfig}
           />
@@ -102,7 +107,7 @@ export default function Home() {
 
         <iframe
           title="Vbusy Widget"
-          src={`https://vbusy-widget.vercel.app/widget?userId=${userId}&borderRadius=${radius}&headerColor=${encodeHexColor(headerColor)}&bodyColor=${encodeHexColor(bodyColor)}&textColor=${encodeHexColor(textColor)}&dueDates=${dueDate}&priorityLevels=${priority}`}
+          src={`https://vbusy-widget.vercel.app/widget?userId=${userId}&borderRadius=${radius}&headerColor=${encodeHexColor(headerColor)}&bodyColor=${encodeHexColor(bodyColor)}&textColor=${encodeHexColor(textColor)}&accentColor=${encodeHexColor(accentColor)}&dueDates=${dueDate}&priorityLevels=${priority}`}
           width="400"
           height="200"
           frameBorder="0"
@@ -116,9 +121,9 @@ export default function Home() {
         </div>
         <p className={styles.iframeCodeDesc}>Copy the code and paste onto your website</p>
         <pre className={styles.pre}>
-          <button className={styles.copyBtn} onClick={() => handleCopyToClipboard(HTMLWidget(userId, radius, headerColor, bodyColor, textColor, dueDate, priority))}><BiCopy className={styles.copyBtnIcon} /></button>
+          <button className={styles.copyBtn} onClick={() => handleCopyToClipboard(HTMLWidget(userId, radius, headerColor, bodyColor, textColor, accentColor, dueDate, priority))}><BiCopy className={styles.copyBtnIcon} /></button>
           <code className={styles.code}>
-            {HTMLWidget(userId, radius, headerColor, bodyColor, textColor, dueDate, priority)}
+            {HTMLWidget(userId, radius, headerColor, bodyColor, textColor, accentColor, dueDate, priority)}
           </code>
         </pre>
       </section>
