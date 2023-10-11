@@ -76,7 +76,7 @@ export default function Home() {
       <iframe
         title="Vbusy Widget"
         src="https://vbusy-widget.vercel.app/widget?userId=${userId}&borderRadius=${borderRadius}&headerColor=${encodeHexColor(headerColor)}&bodyColor=${encodeHexColor(bodyColor)}&textColor=${encodeHexColor(textColor)}&accentColor=${encodeHexColor(accentColor)}&dueDates=${dueDate}&priorityLevels=${priorityLevel}"
-        width="400"
+        width="350"
         height="200"
         frameBorder="0"
       ></iframe>
@@ -108,7 +108,7 @@ export default function Home() {
         <iframe
           title="Vbusy Widget"
           src={`https://vbusy-widget.vercel.app/widget?userId=${userId}&borderRadius=${radius}&headerColor=${encodeHexColor(headerColor)}&bodyColor=${encodeHexColor(bodyColor)}&textColor=${encodeHexColor(textColor)}&accentColor=${encodeHexColor(accentColor)}&dueDates=${dueDate}&priorityLevels=${priority}`}
-          width="400"
+          width="340"
           height="200"
           frameBorder="0"
         ></iframe>
