@@ -4,10 +4,12 @@ import React, { useState } from "react";
 import Input from "@/components/Input";
 import Footer from "@/components/Footer";
 import { InputConfig } from "@/utils/input";
-import { BiCopy, BiCodeAlt } from "react-icons/bi";
+import { BiCopy, BiCodeAlt, BiCheck } from "react-icons/bi";
+import { CLIENT_BASE_URL } from "@/utils/consts";
 import styles from "@/styles/modules/page.module.scss";
 
 export default function Home() {
+  const [isCopied, setIsCopied] = useState<boolean>(false);
   const [userId, setUserId] = useState<string>("64fc8956eea9a7d89a5f901e");
   const [radius, setRadius] = useState<boolean>(true);
   const [headerColor, setHeaderColor] = useState<string>("#181926");
@@ -16,6 +18,7 @@ export default function Home() {
   const [accentColor, setAccentColor] = useState<string>("#f5e48b");
   const [dueDate, setDueDate] = useState<boolean>(false);
   const [priority, setPriority] = useState<boolean>(false);
+  const [hideCompleted, setHideCompleted] = useState<boolean>(true);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>, stateKey: string) => {
     const newValue = event.target.type === "checkbox" ? event.target.checked : event.target.value;
@@ -45,6 +48,9 @@ export default function Home() {
       case "priority":
         setPriority(newValue as boolean);
         break;
+      case "hideCompleted":
+        setHideCompleted(newValue as boolean);
+        break;
       default:
         break;
     }
@@ -52,6 +58,11 @@ export default function Home() {
 
   const handleCopyToClipboard = (code: string) => {
     navigator.clipboard.writeText(code);
+    setIsCopied(true);
+
+    setTimeout(() => {
+      setIsCopied(false);
+    }, 2000);
   };
 
   const encodeHexColor = (color: string) => {
@@ -70,12 +81,13 @@ export default function Home() {
     textColor: string,
     accentColor: string,
     dueDate: boolean,
-    priorityLevel: boolean
+    priorityLevel: boolean,
+    hideCompleted: boolean,
   ) => {
     return `
       <iframe
         title="Vbusy Widget"
-        src="https://vbusy-widget.vercel.app/widget?userId=${userId}&borderRadius=${borderRadius}&headerColor=${encodeHexColor(headerColor)}&bodyColor=${encodeHexColor(bodyColor)}&textColor=${encodeHexColor(textColor)}&accentColor=${encodeHexColor(accentColor)}&dueDates=${dueDate}&priorityLevels=${priorityLevel}"
+        src="${CLIENT_BASE_URL}/widget?userId=${userId}&borderRadius=${borderRadius}&headerColor=${encodeHexColor(headerColor)}&bodyColor=${encodeHexColor(bodyColor)}&textColor=${encodeHexColor(textColor)}&accentColor=${encodeHexColor(accentColor)}&dueDates=${dueDate}&priorityLevels=${priorityLevel}&hideCompleted=${hideCompleted}"
         width="350"
         height="190"
         frameBorder="0"
@@ -94,7 +106,7 @@ export default function Home() {
         <h2 className={styles.settingsHeading}> Options</h2>
         <div className={styles.options}>
           <Input
-            inputValues={{ userId, radius, headerColor, bodyColor, textColor, accentColor, dueDate, priority }}
+            inputValues={{ userId, radius, headerColor, bodyColor, textColor, accentColor, dueDate, priority, hideCompleted }}
             handleInputChange={handleInputChange}
             inputConfig={InputConfig}
           />
@@ -107,7 +119,7 @@ export default function Home() {
 
         <iframe
           title="Vbusy Widget"
-          src={`https://vbusy-widget.vercel.app/widget?userId=${userId}&borderRadius=${radius}&headerColor=${encodeHexColor(headerColor)}&bodyColor=${encodeHexColor(bodyColor)}&textColor=${encodeHexColor(textColor)}&accentColor=${encodeHexColor(accentColor)}&dueDates=${dueDate}&priorityLevels=${priority}`}
+          src={`${CLIENT_BASE_URL}/widget?userId=${userId}&borderRadius=${radius}&headerColor=${encodeHexColor(headerColor)}&bodyColor=${encodeHexColor(bodyColor)}&textColor=${encodeHexColor(textColor)}&accentColor=${encodeHexColor(accentColor)}&dueDates=${dueDate}&priorityLevels=${priority}&hideCompleted=${hideCompleted}`}
           width="340"
           height="190"
           frameBorder="0"
@@ -121,9 +133,11 @@ export default function Home() {
         </div>
         <p className={styles.iframeCodeDesc}>Copy the code and paste onto your website</p>
         <pre className={styles.pre}>
-          <button className={styles.copyBtn} onClick={() => handleCopyToClipboard(HTMLWidget(userId, radius, headerColor, bodyColor, textColor, accentColor, dueDate, priority))}><BiCopy className={styles.copyBtnIcon} /></button>
+          <button className={styles.copyBtn} onClick={() => handleCopyToClipboard(HTMLWidget(userId, radius, headerColor, bodyColor, textColor, accentColor, dueDate, priority, hideCompleted))}>
+            {isCopied ? <BiCheck className={styles.copyBtnIcon} /> : <BiCopy className={styles.copyBtnIcon} /> }
+          </button>
           <code className={styles.code}>
-            {HTMLWidget(userId, radius, headerColor, bodyColor, textColor, accentColor, dueDate, priority)}
+            {HTMLWidget(userId, radius, headerColor, bodyColor, textColor, accentColor, dueDate, priority, hideCompleted)}
           </code>
         </pre>
       </section>

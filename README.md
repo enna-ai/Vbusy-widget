@@ -9,9 +9,9 @@
 </div>
 
 # At a glance
-- input your user ID to view your tasks (retrieve from account settings)
+- input your user ID to view your tasks (retrieve from vbusy account settings)
 - customize the header, body, and text color of the widget
-- tick to show priority levels and due dates of your tasks
+- tick to show priority levels, task due dates, hide completed tasks
 - copy the `iframe` code and embed it into your website
 
 <img src="https://i.imgur.com/ZjKUAbT.png" alt="website" width="650">

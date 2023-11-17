@@ -38,10 +38,16 @@
                     align-items: center;
 
                     .taskItem {
+                        display: flex;
+                        align-items: center;
                         padding-top: 5px;
                         padding-bottom: 6px;
                         color: $white-lightest;
                         font-size: 15px;
+
+                        .completed {
+                            text-decoration: line-through;
+                        }
 
                         .priorityLevelDot {
                             height: 8px;

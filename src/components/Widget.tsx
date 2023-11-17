@@ -15,11 +15,12 @@ interface WidgetProps {
     accentColor: string | null,
     dueDates: string;
     priorityLevels: string;
+    hideCompleted: string;
     userData: Task[];
     errorMsg: string | null;
 }
 
-const Widget: React.FC<WidgetProps> = ({ userId, borderRadius, headerColor, bodyColor, textColor, accentColor, dueDates, priorityLevels, userData, errorMsg }) => {
+const Widget: React.FC<WidgetProps> = ({ userId, borderRadius, headerColor, bodyColor, textColor, accentColor, dueDates, priorityLevels, hideCompleted, userData, errorMsg }) => {
 
     const formatDueDate = (date: string) => {
         if (date) {
@@ -27,7 +28,8 @@ const Widget: React.FC<WidgetProps> = ({ userId, borderRadius, headerColor, body
         }
     };
 
-    const remainingTasksCount = userData.length - 3;
+    const filteredTasks = hideCompleted ? userData.filter(item => !item.completed) : userData;
+    const remainingTasksCount = filteredTasks.length > 3 ? filteredTasks.length - 3 : 0;
 
     const priorityColors = {
         low: "#a6da95",
@@ -50,24 +52,26 @@ const Widget: React.FC<WidgetProps> = ({ userId, borderRadius, headerColor, body
                             <p className={styles.invalidBody}>{errorMsg}</p>
                         ) : (
                             <ul className={styles.taskBody}>
-                                {userData.map((item, index) => (
-                                    <div key={index}>
-                                        <div className={styles.taskContent}>
-                                            <li className={styles.taskItem} key={index}>
-                                                {priorityLevels &&
-                                                    <span className={styles.priorityLevelDot} style={{ background: priorityColors[item.priority] }}></span>
+                                {filteredTasks.slice(0, 3).map((item, index) => (
+                                    (!hideCompleted || !item.completed) && (
+                                        <div key={index}>
+                                            <div className={styles.taskContent}>
+                                                <li className={styles.taskItem} key={index}>
+                                                    {priorityLevels &&
+                                                        <span className={styles.priorityLevelDot} style={{ background: priorityColors[item.priority] }}></span>
+                                                    }
+                                                    <p className={`${item.completed ? styles.completed : ""}`}>{item.task}</p>
+                                                </li>
+                                                {dueDates &&
+                                                    <p style={{ color: moment(item.dueDate).isBefore(moment()) ? '#ed8796' : 'inherit' }}>
+                                                        {formatDueDate(item.dueDate)}
+                                                    </p>
                                                 }
-                                                {item.task}
-                                            </li>
-                                            {dueDates &&
-                                                <p style={{ color: moment(item.dueDate).isBefore(moment()) ? '#ed8796' : 'inherit' }}>
-                                                    {formatDueDate(item.dueDate)}
-                                                </p>
-                                            }
+                                            </div>
+                                            {index !== 2 && <hr />}
                                         </div>
-                                        {index !== 2 && <hr />}
-                                    </div>
-                                )).slice(0, 3)}
+                                    )
+                                ))}
 
                                 {remainingTasksCount > 0 && (
                                     <span className={styles.remainingTasks}>

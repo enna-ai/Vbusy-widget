@@ -39,4 +39,9 @@ export const InputConfig = [
         type: "checkbox",
         state: "priority",
     },
+    {
+        label: "Hide Completed",
+        type: "checkbox",
+        state: "hideCompleted"
+    }
 ];

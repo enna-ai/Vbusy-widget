@@ -3,4 +3,5 @@ export interface Task {
     dueDate: string;
     archived: boolean;
     priority: string;
+    completed: boolean;
 }
